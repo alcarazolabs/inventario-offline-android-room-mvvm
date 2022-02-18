@@ -36,13 +36,14 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductsAdapterV2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //instanciar adapater del recyclerview
-        productsRecyclerViewAdapterV2 = ProductsAdapterV2(requireContext(), this)
+        productsRecyclerViewAdapterV2 = ProductsAdapterV2(this)
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentProductsBinding.bind(view)
+        setObservers()
         //habilitar menu
         setHasOptionsMenu(true)
         binding.rvProducts.layoutManager = LinearLayoutManager(requireContext())
@@ -52,10 +53,23 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductsAdapterV2
             findNavController().navigate(R.id.action_productsFragment_to_registerProductFragment)
         }
 
-        fetchAllProducts()
+        //Ocultar shimmer o efecto de pre-carga, lo normal es con pocos datos que no se vea.
+        hideViewLoading()
+    }
+    private fun hideViewLoading() {
+        binding.shimmerFrameLayout.stopShimmerAnimation()
+        binding.shimmerFrameLayout.visibility = View.GONE
     }
 
-    fun fetchAllProducts(){
+    private fun setObservers() {
+        viewModel.products.observe(viewLifecycleOwner) {
+            productsRecyclerViewAdapterV2.setProductList(it)
+        }
+    }
+
+
+    fun setupObserversv1(){
+        //De esta manera si se puede ver el efecto del shimmer.
 
         viewModel.getAllProducts().observe(viewLifecycleOwner,{
             when(it){
@@ -70,6 +84,10 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductsAdapterV2
                     //Setear data al recyclerview
                    // binding.rvProducts.adapter = ProductsAdapter(it.data, this@ProductsFragment) //Forma normal ProductsAdapater
                     productsRecyclerViewAdapterV2.setProductList(it.data)
+                }
+                is Resource.Failure ->{
+                    Toast.makeText(requireContext(), "No se pudo obtener los productos", Toast.LENGTH_SHORT).show()
+
                 }
             }
         })
@@ -110,8 +128,6 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductsAdapterV2
         if(id == R.id.menu_eliminar){
             deleteAllProduct()
         }
-
-
         return super.onOptionsItemSelected(item)
     }
 
@@ -125,8 +141,6 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductsAdapterV2
             }
             .setPositiveButton("Si"){dialog, which ->
                 viewModel.deleteAllProducts()
-                //Se llama a setup observers para refrescar la llamada a la base de datos. Si no se hace el recyclerview no se actualiza.
-                fetchAllProducts()
 
                 Toast.makeText(requireContext(), "Productos eliminados correctamente", Toast.LENGTH_SHORT).show()
 

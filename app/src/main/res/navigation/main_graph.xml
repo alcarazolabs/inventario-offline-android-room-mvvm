@@ -25,6 +25,12 @@
         <action
             android:id="@+id/action_registerProductFragment_to_productsFragment"
             app:destination="@id/productsFragment" />
+        <argument
+            android:name="barcode"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_registerProductFragment_to_scanBarcodeActivity"
+            app:destination="@id/scanBarcodeActivity" />
     </fragment>
     <fragment
         android:id="@+id/editProductFragment"
@@ -37,4 +43,9 @@
             android:name="productObject"
             app:argType="com.example.inventariooffline.data.model.Product" />
     </fragment>
+    <activity
+        android:id="@+id/scanBarcodeActivity"
+        android:name="com.example.inventariooffline.ui.product.ScanBarcodeActivity"
+        android:label="activity_scan_barcode"
+        tools:layout="@layout/activity_scan_barcode" />
 </navigation>

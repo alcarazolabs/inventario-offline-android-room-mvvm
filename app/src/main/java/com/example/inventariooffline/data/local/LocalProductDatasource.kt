@@ -1,6 +1,7 @@
 package com.example.inventariooffline.data.local
 
 import com.example.inventariooffline.data.model.Product
+import kotlinx.coroutines.flow.Flow
 
 class LocalProductDatasource (private val productDao: ProductDao){
 
@@ -11,6 +12,11 @@ class LocalProductDatasource (private val productDao: ProductDao){
     suspend fun getAllProducts():List<Product>{
         return productDao.getAllProducts()
     }
+
+     fun allProducts(): Flow<List<Product>> {
+        return productDao.allProducts()
+    }
+
 
     suspend fun updateProduct(product: Product){
         productDao.updateProduct(product)

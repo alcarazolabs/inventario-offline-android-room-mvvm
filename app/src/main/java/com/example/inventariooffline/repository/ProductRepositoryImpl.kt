@@ -3,6 +3,7 @@ package com.example.inventariooffline.repository
 import com.example.inventariooffline.data.local.LocalProductDatasource
 import com.example.inventariooffline.data.model.Product
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 
 class ProductRepositoryImpl (
     private val dataSourceLocal: LocalProductDatasource)
@@ -14,8 +15,12 @@ class ProductRepositoryImpl (
 
     override suspend fun getAllProducts(): List<Product> {
         //Agregar delay para ver efecto del shimmer.
-        delay(3000)
+        delay(1500)
         return dataSourceLocal.getAllProducts()
+    }
+
+    override  fun allProducts(): Flow<List<Product>> {
+        return dataSourceLocal.allProducts()
     }
 
     override suspend fun updateProduct(product: Product) {

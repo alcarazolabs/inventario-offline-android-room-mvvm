@@ -1,19 +1,20 @@
 package com.example.inventariooffline.ui.product
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextUtils
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.room.ColumnInfo
 import com.example.inventariooffline.R
 import com.example.inventariooffline.data.local.AppDatabase
 import com.example.inventariooffline.data.local.LocalProductDatasource
 import com.example.inventariooffline.data.model.Product
-import com.example.inventariooffline.databinding.FragmentProductsBinding
 import com.example.inventariooffline.databinding.FragmentRegisterProductBinding
 import com.example.inventariooffline.presentation.ProductViewModel
 import com.example.inventariooffline.presentation.ProductViewModelFactory
@@ -34,9 +35,21 @@ class RegisterProductFragment : Fragment(R.layout.fragment_register_product) {
         setHasOptionsMenu(true)
         binding = FragmentRegisterProductBinding.bind(view)
 
+        // ResultLauncher para recibir el bundle que se enviará desde la actividad ScanBarcodeActivity.
+        var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                //Obtener key del bundle
+                val barcode = data?.getStringExtra("barcode")
+                binding.txtBarcode.setText(barcode)
+            }
+        }
 
         binding.btnBarCode.setOnClickListener{
-            Toast.makeText(requireContext(), "Abrir scanner..", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Abriendo scanner..", Toast.LENGTH_LONG).show()
+            //Abrir actividad que muestra el scanner de codigo de barras
+            val intent = Intent(activity, ScanBarcodeActivity::class.java)
+            resultLauncher.launch(intent)
         }
 
 
@@ -87,4 +100,6 @@ class RegisterProductFragment : Fragment(R.layout.fragment_register_product) {
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 }

@@ -14,7 +14,10 @@ android {
     defaultConfig {
         //agregar lo sgt para version para sdk 30 https://stackoverflow.com/questions/69034879/how-can-i-resolve-the-error-the-mincompilesdk-31-specified-in-a-dependencys
         configurations.all {
-            resolutionStrategy { force 'androidx.core:core-ktx:1.6.0' }
+            resolutionStrategy {
+                force 'androidx.core:core-ktx:1.6.0'
+
+            }
         }
 
         applicationId "com.example.inventariooffline"
@@ -86,4 +89,7 @@ dependencies {
 
     //Libreria Shimmer para lograr efecto de facebook o pre-carga de datos. Como Alternativa al progress-bar
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
+    //Scanner de codigo de barras y QR Zxing
+    implementation 'me.dm7.barcodescanner:zxing:1.9.9'
 }
