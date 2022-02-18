@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/productsFragment">
+
+    <fragment
+        android:id="@+id/productsFragment"
+        android:name="com.example.inventariooffline.ui.product.ProductsFragment"
+        android:label="fragment_products"
+        tools:layout="@layout/fragment_products" >
+        <action
+            android:id="@+id/action_productsFragment_to_registerProductFragment"
+            app:destination="@id/registerProductFragment" />
+        <action
+            android:id="@+id/action_productsFragment_to_editProductFragment"
+            app:destination="@id/editProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerProductFragment"
+        android:name="com.example.inventariooffline.ui.product.RegisterProductFragment"
+        android:label="fragment_register_product"
+        tools:layout="@layout/fragment_register_product" >
+        <action
+            android:id="@+id/action_registerProductFragment_to_productsFragment"
+            app:destination="@id/productsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProductFragment"
+        android:name="com.example.inventariooffline.ui.product.EditProductFragment"
+        android:label="EditProductFragment" >
+        <action
+            android:id="@+id/action_editProductFragment_to_productsFragment"
+            app:destination="@id/productsFragment" />
+        <argument
+            android:name="productObject"
+            app:argType="com.example.inventariooffline.data.model.Product" />
+    </fragment>
+</navigation>

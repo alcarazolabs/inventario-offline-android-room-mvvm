@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="5dp">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/productImage"
+        android:layout_width="76dp"
+        android:layout_height="76dp"
+        android:src="@drawable/ic_launcher_background"
+        />
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        tools:text="Product x"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/primaryDarkColor"
+       android:layout_toRightOf="@+id/productImage"
+        />
+
+    <TextView
+        android:id="@+id/txtDescription"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        tools:text="some product x.."
+        android:textSize="13sp"
+        android:layout_below="@+id/txtName"
+        android:layout_toEndOf="@+id/productImage"
+        />
+
+    <TextView
+        android:id="@+id/txtBarcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        tools:text="2342352352"
+        android:textSize="13sp"
+        android:layout_below="@+id/txtDescription"
+        android:layout_toEndOf="@+id/productImage"
+        />
+
+    <TextView
+        android:id="@+id/txtQty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        tools:text="40"
+        android:textSize="13sp"
+        android:layout_below="@+id/txtBarcode"
+        android:layout_toEndOf="@+id/productImage"
+        />
+
+    <TextView
+        android:id="@+id/txtPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        tools:text="45"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/txtName"
+        android:layout_toEndOf="@+id/txtDescription"
+
+
+        />
+
+
+</RelativeLayout>

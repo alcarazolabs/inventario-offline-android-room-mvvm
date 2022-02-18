@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <item
+            android:id="@+id/menu_register"
+            android:icon="@drawable/ic_check"
+            android:title="Registrar"
+            app:showAsAction="ifRoom"/>
+
+        <item
+            android:id="@+id/menu_eliminar"
+            android:icon="@drawable/ic_delete"
+            android:title="Eliminar"
+            app:showAsAction="ifRoom"/>
+
+</menu>

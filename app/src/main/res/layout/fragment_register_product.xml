@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.product.RegisterProductFragment"
+    android:padding="3dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/primaryDarkColor"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registrar Product"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name"
+        android:layout_below="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre Producto"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/barcode"
+        android:layout_below="@+id/name"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="Código de barras"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtBarcode"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <TextView
+        android:id="@+id/btnBarCode"
+        android:layout_below="@+id/name"
+        android:layout_toEndOf="@+id/barcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:drawableEnd="@drawable/ic_barcode"
+        android:textSize="30sp"
+        app:drawableTint="@color/black"
+
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/description"
+        android:layout_below="@+id/barcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descripción"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/price"
+        android:layout_below="@+id/description"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:hint="Precio"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtPrice"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/qty"
+        android:layout_below="@+id/description"
+        android:layout_toRightOf="@+id/price"
+        android:layout_marginLeft="10dp"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:hint="Cantidad"
+        android:inputType="numberDecimal"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtQty"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/btnSelecImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/qty"
+        android:text="Seleccionar foto"
+        />
+    <Button
+        android:id="@+id/btnTakeImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnSelecImage"
+        android:text="Tomar foto"
+        />
+
+
+</RelativeLayout>
