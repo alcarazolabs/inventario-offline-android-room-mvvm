@@ -70,17 +70,11 @@ class EditProductFragment : Fragment(R.layout.fragment_edit_product) {
     }
 
     fun validateInputs(  name: String,
-                         barcode: String,
-                         description: String,
-                         price: String,
                          qty: String,
-                         image_path: String): Boolean{
+                         price: String): Boolean{
         return !(TextUtils.isEmpty(name) ||
-                TextUtils.isEmpty(barcode) ||
-                TextUtils.isEmpty(description) ||
-                TextUtils.isEmpty(price) ||
                 TextUtils.isEmpty(qty) ||
-                TextUtils.isEmpty(image_path))
+                TextUtils.isEmpty(price))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -99,7 +93,7 @@ class EditProductFragment : Fragment(R.layout.fragment_edit_product) {
             val qty = binding.txtQty.text.toString()
             val image_path = "https://www.marketingdirecto.com/wp-content/uploads/2016/05/china-1-300x174.jpg"
 
-            if(validateInputs(name,barcode,description,price,qty,image_path)){
+            if(validateInputs(name,qty,price)){
                 val product = Product(args.productObject.id,
                                     name,
                                     barcode,
@@ -113,7 +107,7 @@ class EditProductFragment : Fragment(R.layout.fragment_edit_product) {
                 findNavController().navigate(R.id.action_editProductFragment_to_productsFragment)
 
             }else{
-                Toast.makeText(requireContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "El nombre, precio y cantidad son necesarios.", Toast.LENGTH_SHORT).show()
             }
         }
 

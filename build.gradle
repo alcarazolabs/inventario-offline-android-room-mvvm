@@ -20,6 +20,8 @@ allprojects {
         google()
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
+        //Repositorio para el image cropper
+        maven { url 'https://jitpack.io' }
     }
 }
 

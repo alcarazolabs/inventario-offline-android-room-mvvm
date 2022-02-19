@@ -92,4 +92,8 @@ dependencies {
 
     //Scanner de codigo de barras y QR Zxing
     implementation 'me.dm7.barcodescanner:zxing:1.9.9'
+
+    //Cropper y capturador de imágen
+    implementation 'com.github.CanHub:Android-Image-Cropper:4.1.0'
+
 }

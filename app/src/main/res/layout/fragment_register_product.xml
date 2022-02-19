@@ -138,19 +138,20 @@
 
 
     <Button
-        android:id="@+id/btnSelecImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/qty"
-        android:text="Seleccionar foto"
-        />
-    <Button
         android:id="@+id/btnTakeImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnSelecImage"
+        android:layout_below="@id/price"
         android:text="Tomar foto"
         />
 
+    <ImageView
+        android:id="@+id/productImage"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/btnTakeImage"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/ic_launcher"
+        />
 
 </RelativeLayout>

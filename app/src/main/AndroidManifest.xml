@@ -3,7 +3,12 @@
     package="com.example.inventariooffline">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <!-- El siguiente permiso es para el image cropper si corre en dispositivos menores a android 10 https://github.com/CanHub/Android-Image-Cropper -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InventarioOffline">
         <activity android:name=".ui.product.ScanBarcodeActivity"></activity>
+        <!-- Se registró a continuación la actividad del Image Cropper -->
+        <activity android:name="com.canhub.cropper.CropImageActivity"></activity>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
