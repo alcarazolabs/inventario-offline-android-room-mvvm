@@ -1,6 +1,8 @@
 package com.example.inventariooffline.ui.product
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Menu
@@ -9,6 +11,7 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -46,6 +49,23 @@ class EditProductFragment : Fragment(R.layout.fragment_edit_product) {
         binding.txtBarcode.setText(args.productObject.barcode)
         binding.txtQty.setText(args.productObject.qty.toString())
         binding.txtPrice.setText(args.productObject.price.toString())
+
+        // ResultLauncher para recibir el bundle que se enviará desde la actividad ScanBarcodeActivity.
+        var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                //Obtener key del bundle
+                val barcode = data?.getStringExtra("barcode")
+                binding.txtBarcode.setText(barcode)
+            }
+        }
+
+        binding.btnBarCode.setOnClickListener{
+            Toast.makeText(requireContext(), "Abriendo scanner..", Toast.LENGTH_LONG).show()
+            //Abrir actividad que muestra el scanner de codigo de barras
+            val intent = Intent(activity, ScanBarcodeActivity::class.java)
+            resultLauncher.launch(intent)
+        }
 
     }
 
