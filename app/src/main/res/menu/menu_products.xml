@@ -8,5 +8,10 @@
             android:title="Eliminar"
             app:showAsAction="ifRoom"/>
 
+        <item
+            android:id="@+id/menu_exportar"
+            android:icon="@drawable/ic_export"
+            android:title="Exportar inventario a CSV"
+            />
 
 </menu>

@@ -1,20 +1,26 @@
 package com.example.inventariooffline.ui.product
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.graphics.drawable.toBitmap
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageView
+import com.canhub.cropper.options
 import com.example.inventariooffline.R
 import com.example.inventariooffline.data.local.AppDatabase
 import com.example.inventariooffline.data.local.LocalProductDatasource
@@ -30,6 +36,7 @@ class EditProductFragment : Fragment(R.layout.fragment_edit_product) {
 
     private lateinit var binding : FragmentEditProductBinding
     private val args by navArgs<EditProductFragmentArgs>()
+    private var productImageUri : Uri? = null
 
     //Instanciar viewModel
     private val viewModel by viewModels<ProductViewModel> { ProductViewModelFactory(
@@ -37,6 +44,23 @@ class EditProductFragment : Fragment(R.layout.fragment_edit_product) {
             LocalProductDatasource(AppDatabase.getDatabase(requireContext()).productDao())
         )
     ) }
+
+    //ActivityResult del ImageCropper con CropImageContract
+    private val cropImage = registerForActivityResult(CropImageContract()) { result ->
+        if (result.isSuccessful) {
+            // Obtener Uri
+            val uriContent = result.uriContent
+            val uriFilePath = result.getUriFilePath(requireContext()) // optional usage
+            //Establecer imagen al imageView a partir de la Uri.
+            binding.productImage.setImageURI(uriContent)
+            //Guardar uri en la variable productImageUri
+            productImageUri = uriContent
+
+        } else {
+            // an error occurred
+            val exception = result.error
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,6 +73,7 @@ class EditProductFragment : Fragment(R.layout.fragment_edit_product) {
         binding.txtBarcode.setText(args.productObject.barcode)
         binding.txtQty.setText(args.productObject.qty.toString())
         binding.txtPrice.setText(args.productObject.price.toString())
+        args.productObject.image_bitmap?.let { binding.productImage.setImageBitmap(args.productObject.image_bitmap) }
 
         // ResultLauncher para recibir el bundle que se enviará desde la actividad ScanBarcodeActivity.
         var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -65,6 +90,15 @@ class EditProductFragment : Fragment(R.layout.fragment_edit_product) {
             //Abrir actividad que muestra el scanner de codigo de barras
             val intent = Intent(activity, ScanBarcodeActivity::class.java)
             resultLauncher.launch(intent)
+        }
+
+        binding.productImage.setOnClickListener {
+            //Abrir image cropper
+            cropImage.launch(
+                options {
+                    setGuidelines(CropImageView.Guidelines.ON)
+                }
+            )
         }
 
     }
@@ -91,17 +125,21 @@ class EditProductFragment : Fragment(R.layout.fragment_edit_product) {
             val description = binding.txtDescription.text.toString()
             val price = binding.txtPrice.text.toString()
             val qty = binding.txtQty.text.toString()
-            val image_path = "https://www.marketingdirecto.com/wp-content/uploads/2016/05/china-1-300x174.jpg"
 
             if(validateInputs(name,qty,price)){
-                val product = Product(args.productObject.id,
-                                    name,
-                                    barcode,
-                                    description,price.toDouble(),
-                                    Integer.parseInt(qty),
-                                    image_path)
-                //Actualizar product
-                viewModel.updateProduct(product)
+                //Si se selecciono una nueva imagen.
+                productImageUri?.let{
+                    val product = Product(args.productObject.id,name,barcode,description,price.toDouble(),Integer.parseInt(qty),getBitmap(productImageUri!!))
+                    viewModel.updateProduct(product)
+                }
+                //Si no se selecciono imágen
+                if(productImageUri==null){
+                    //Obtener el bitmap del imageview
+                    //val bitmap = binding.productImage.getDrawable().toBitmap()
+
+                    val product = Product(args.productObject.id,name,barcode,description,price.toDouble(),Integer.parseInt(qty),args.productObject.image_bitmap)
+                    viewModel.updateProduct(product)
+                }
 
                 Toast.makeText(requireContext(), "Actualizado correctamente", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_editProductFragment_to_productsFragment)
@@ -138,4 +176,11 @@ class EditProductFragment : Fragment(R.layout.fragment_edit_product) {
             .show()
 
     }
+
+    private  fun getBitmap(imageUri: Uri): Bitmap {
+        val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, Uri.parse(imageUri.toString()))
+
+        return bitmap
+    }
+
 }

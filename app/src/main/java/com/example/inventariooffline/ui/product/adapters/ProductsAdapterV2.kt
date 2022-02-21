@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil.DiffResult.NO_POSITION
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.demo.core.BaseViewHolder
+import com.example.inventariooffline.R
 import com.example.inventariooffline.data.model.Product
 import com.example.inventariooffline.databinding.ProductsListBinding
 
@@ -29,6 +30,9 @@ class ProductsAdapterV2(
     fun setProductList(productsList: List<Product>) {
         this.productsList = productsList
         notifyDataSetChanged()
+    }
+    fun getProductList():List<Product>{
+        return this.productsList
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
@@ -63,12 +67,23 @@ class ProductsAdapterV2(
 
     private inner class MainViewHolder (val binding: ProductsListBinding) : BaseViewHolder<Product>(binding.root) {
         override fun bind(item: Product) {
-            binding.txtName.text="${item.name}"
-            binding.txtDescription.text="${item.description}"
-            binding.txtBarcode.text="${item.barcode}"
+            val description = if (item.description.isNotEmpty()) item.description else "Sin descripción."
+            val barcode = if (item.barcode.isNotEmpty()) item.barcode  else "Sin código."
+
+            binding.txtName.text=item.name
+            binding.txtDescription.text=description
+            binding.txtBarcode.text=barcode
             binding.txtQty.text = "Cantidad: ${item.qty}"
             binding.txtPrice.text = "S/${item.price}"
-            Glide.with(binding.productImage.context).load("${item.image_path}").centerCrop().into(binding.productImage)
+            //Si el image_bitmap no es nulo:
+            item.image_bitmap?.let { binding.productImage.setImageBitmap(item.image_bitmap!!) }
+
+            //En caso de que el image_bitmap sea nulo se establece un drawable al imageView:
+            //if (binding.productImage == null) binding.productImage.setBackgroundResource(R.drawable.ic_galery)
+            //ya no se se setea un drawable por que por defecto tomara el drawable del imageview por defecto.
+
+
+            //Glide.with(binding.productImage.context).load("${item.image_path}").centerCrop().into(binding.productImage)
 
         }
     }

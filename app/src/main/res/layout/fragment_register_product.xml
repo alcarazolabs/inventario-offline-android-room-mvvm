@@ -24,10 +24,19 @@
             />
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header">
+    <!-- El scroll view solo puede tener un hijo. Entonces se
+     pone todo dentro de un solo contenedor "un RelativeLayout" -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/name"
-        android:layout_below="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nombre Producto"
@@ -70,6 +79,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/primaryColor"
         android:drawableEnd="@drawable/ic_barcode"
         android:textSize="30sp"
         app:drawableTint="@color/black"
@@ -136,22 +147,22 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
-    <Button
-        android:id="@+id/btnTakeImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/price"
-        android:text="Tomar foto"
-        />
-
+<!-- Para poder setear el srcCompat del image view se agrego al gradle:
+ vectorDrawables.useSupportLibrary true
+ El drawable debe de estar en la carpeta Drawable no en drawable-24.
+ -->
     <ImageView
         android:id="@+id/productImage"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_below="@+id/btnTakeImage"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/price"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:layout_centerInParent="true"
-        android:src="@mipmap/ic_launcher"
+        app:srcCompat="@drawable/ic_picture"
+        android:adjustViewBounds="true"
         />
+
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

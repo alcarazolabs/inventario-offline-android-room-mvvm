@@ -48,7 +48,7 @@ class ProductsAdapter(
             binding.txtBarcode.text="${item.barcode}"
             binding.txtQty.text = "Cantidad: ${item.qty}"
             binding.txtPrice.text = "S/${item.price}"
-            Glide.with(context).load("${item.image_path}").centerCrop().into(binding.productImage)
+           // Glide.with(context).load("${item.image_path}").centerCrop().into(binding.productImage)
 
         }
     }

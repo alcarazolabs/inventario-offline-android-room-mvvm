@@ -19,7 +19,7 @@ android {
 
             }
         }
-
+        vectorDrawables.useSupportLibrary true
         applicationId "com.example.inventariooffline"
         minSdkVersion 21
         targetSdkVersion 30

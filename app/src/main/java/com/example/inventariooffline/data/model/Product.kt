@@ -1,5 +1,6 @@
 package com.example.inventariooffline.data.model
 
+import android.graphics.Bitmap
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -21,7 +22,7 @@ data class Product(
     val price: Double,
     @ColumnInfo(name = "qty")
     val qty: Int,
-    @ColumnInfo(name = "image_path")
-    val image_path: String
+    @ColumnInfo(name = "image_bitmap")
+    val image_bitmap: Bitmap? = null
 ) : Parcelable
 
