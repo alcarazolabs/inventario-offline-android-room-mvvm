@@ -29,4 +29,10 @@ interface ProductDao {
     @Query("DELETE FROM product_table_entity")
     suspend fun deleteAllProducts()
 
+    //buscar solo por nombre:
+    // @Query("SELECT * FROM product_table_entity WHERE name LIKE '%' || :search || '%' ")
+    //buscar en varios campos con like
+    @Query("SELECT * FROM product_table_entity WHERE name LIKE '%' || :search || '%' OR barcode LIKE '%' || :search || '%' ")
+    fun searchProduct(search: String?): Flow<List<Product>>
+
 }

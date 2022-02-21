@@ -35,5 +35,8 @@ class ProductRepositoryImpl (
         dataSourceLocal.deleteAllProducts()
     }
 
+    override  fun searchProduct(search: String?): Flow<List<Product>> {
+       return  dataSourceLocal.searchProduct(search)
+    }
 
 }

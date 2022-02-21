@@ -2,10 +2,10 @@ package com.example.inventariooffline.ui.product
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.provider.DocumentsContract
 import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -68,6 +68,8 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductsAdapterV2
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentProductsBinding.bind(view)
         setObservers()
+        setupSearchView()
+
         //habilitar menu
         setHasOptionsMenu(true)
         binding.rvProducts.layoutManager = LinearLayoutManager(requireContext())
@@ -95,6 +97,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductsAdapterV2
         viewModel.products.observe(viewLifecycleOwner) {
             productsRecyclerViewAdapterV2.setProductList(it)
         }
+
     }
 
 
@@ -173,6 +176,11 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductsAdapterV2
 
         }
 
+        if(id == R.id.menu_buscar){
+            binding.searchView.visibility=View.VISIBLE
+
+        }
+
 
         return super.onOptionsItemSelected(item)
     }
@@ -215,5 +223,27 @@ class ProductsFragment : Fragment(R.layout.fragment_products), ProductsAdapterV2
         val minute = c.get(Calendar.MINUTE)
 
         return "${year}-${month}-${day}_${hour}:${minute}"
+    }
+
+    private fun setupSearchView(){
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                //Busqueda usando el viewModel y Flow
+                viewModel.searcQueryProduct.value = query!!
+
+                //Busqueda usando el filter:
+                //productsRecyclerViewAdapterV2.filter.filter(query)
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                //Busqueda usando el viewModel y Flow
+                viewModel.searcQueryProduct.value = newText!!
+
+                //Busqueda usando el filter:
+                //productsRecyclerViewAdapterV2.filter.filter(newText!!)
+
+                return false
+            }
+        })
     }
 }

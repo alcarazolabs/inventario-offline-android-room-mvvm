@@ -28,6 +28,10 @@ class LocalProductDatasource (private val productDao: ProductDao){
         productDao.deleteAllProducts()
     }
 
+     fun searchProduct(search:String?): Flow<List<Product>> {
+        return productDao.searchProduct(search)
+    }
+
 
 }
 

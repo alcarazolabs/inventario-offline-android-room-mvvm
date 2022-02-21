@@ -3,6 +3,8 @@ package com.example.primerappmvvmretrofitkotlin.ui.main.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -52,4 +54,6 @@ class ProductsAdapter(
 
         }
     }
+
+
 }

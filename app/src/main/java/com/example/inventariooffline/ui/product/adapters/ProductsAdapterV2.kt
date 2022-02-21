@@ -1,24 +1,23 @@
 package com.example.primerappmvvmretrofitkotlin.ui.main.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DiffUtil.DiffResult.NO_POSITION
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.demo.core.BaseViewHolder
-import com.example.inventariooffline.R
 import com.example.inventariooffline.data.model.Product
 import com.example.inventariooffline.databinding.ProductsListBinding
 
 
 class ProductsAdapterV2(
     private val itemClickListener: OnProductClickListener
-) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+) : RecyclerView.Adapter<BaseViewHolder<*>>(), Filterable {
 
     private var productsList = listOf<Product>()
-
+    private var productsListBackup = listOf<Product>()
 
     interface OnProductClickListener {
         //Método para gestionar el OnClick de los items del recyclerview
@@ -29,6 +28,8 @@ class ProductsAdapterV2(
 
     fun setProductList(productsList: List<Product>) {
         this.productsList = productsList
+        this.productsListBackup = productsList
+
         notifyDataSetChanged()
     }
     fun getProductList():List<Product>{
@@ -87,4 +88,33 @@ class ProductsAdapterV2(
 
         }
     }
+
+    //Método para filtrar registro por la búsqueda del searchView. Se extiende de Filterable para poder usar este método.
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(charSequence: CharSequence?): Filter.FilterResults {
+                val queryString = charSequence?.toString().orEmpty().lowercase()
+                return Filter.FilterResults().apply {
+                    values = when {
+                        queryString.isEmpty() -> productsListBackup
+                        else -> productsListBackup.filter {
+                            it.name.lowercase().contains(queryString) ||
+                                    it.barcode.lowercase().contains(queryString) ||
+                                    it.description.lowercase().contains(queryString)
+                        }
+                    }
+                }
+
+            }
+
+            override fun publishResults(charSequence: CharSequence?, filterResults: Filter.FilterResults) {
+                productsList = filterResults.values as List<Product>
+                notifyDataSetChanged()
+            }
+        }
+
+    }
+
+
 }

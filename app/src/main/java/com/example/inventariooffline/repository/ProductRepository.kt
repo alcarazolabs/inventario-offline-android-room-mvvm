@@ -10,5 +10,5 @@ interface ProductRepository {
     suspend fun updateProduct(product: Product)
     suspend fun deleteProduct(product: Product)
     suspend fun deleteAllProducts()
-
+    fun searchProduct(search:String?): Flow<List<Product>>
 }

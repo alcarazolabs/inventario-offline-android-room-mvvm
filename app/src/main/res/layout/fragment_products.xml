@@ -21,6 +21,16 @@
         />
 </LinearLayout>
 
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_below="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:visibility="gone"
+        android:background="@drawable/searchview_bg"
+        />
+
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerFrameLayout"
         android:layout_width="match_parent"
@@ -52,7 +62,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@+id/shimmerFrameLayout"
+        android:layout_below="@+id/searchView"
         android:id="@+id/rv_products"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
