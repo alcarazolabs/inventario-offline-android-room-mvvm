@@ -18,3 +18,4 @@
 <img src="https://github.com/alcarazolabs/inventario-offline-android-room-mvvm/blob/main/register.png">
 <img src="https://github.com/alcarazolabs/inventario-offline-android-room-mvvm/blob/main/edit.png">
 <img src="https://github.com/alcarazolabs/inventario-offline-android-room-mvvm/blob/main/scanner.png">
+<img src="https://github.com/alcarazolabs/inventario-offline-android-room-mvvm/blob/main/crop.png">
